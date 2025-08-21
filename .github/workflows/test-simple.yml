@@ -1,0 +1,22 @@
+name: Test Simple Workflow
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "CHANGELOG.md"
+
+jobs:
+  test-simple:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+
+    steps:
+      - name: Simple test
+        run: |
+          echo "=== SIMPLE TEST WORKFLOW ==="
+          echo "Current time: $(date)"
+          echo "Working directory: $(pwd)"
+          echo "Repository: ${{ github.repository }}"
+          echo "Test completed successfully"

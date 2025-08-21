@@ -1,0 +1,40 @@
+name: Test External Checkout
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "CHANGELOG.md"
+
+jobs:
+  test-checkout:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout current repo
+        uses: actions/checkout@v4
+
+      - name: Test current repo
+        run: |
+          echo "=== CURRENT REPO TEST ==="
+          pwd
+          ls -la
+          echo "✅ Current repo checkout successful"
+
+      - name: Checkout docs portal repo
+        uses: actions/checkout@v4
+        with:
+          repository: bobinstein/mock-docs-portal
+          token: ${{ secrets.DOCS_PORTAL_TOKEN }}
+          path: ./docs-portal
+
+      - name: Test docs portal checkout
+        run: |
+          echo "=== DOCS PORTAL CHECKOUT TEST ==="
+          pwd
+          ls -la
+          echo "--- DOCS PORTAL CONTENTS ---"
+          ls -la ./docs-portal/
+          echo "✅ Docs portal checkout successful"
