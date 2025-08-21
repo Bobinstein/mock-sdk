@@ -27,7 +27,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "18"
-          cache: 'npm'
+          cache: "npm"
 
       - name: Debug directory structure
         run: |
@@ -59,6 +59,10 @@ jobs:
           pwd
           echo "--- CHECKING SCRIPT EXISTS ---"
           ls -la .github/workflows/update-release-notes.js
+          echo "--- CHECKING ENVIRONMENT VARIABLES ---"
+          echo "SDK_CHANGELOG_PATH: $SDK_CHANGELOG_PATH"
+          echo "GITHUB_TOKEN: ${GITHUB_TOKEN:0:10}..." 
+          echo "SLACK_WEBHOOK_URL: ${SLACK_WEBHOOK_URL:-'NOT SET'}"
           echo "--- RUNNING SCRIPT TEST ---"
           echo "Starting script at $(date)"
           node .github/workflows/update-release-notes.js
@@ -66,4 +70,4 @@ jobs:
         env:
           SDK_CHANGELOG_PATH: ${{ github.workspace }}/CHANGELOG.md
           GITHUB_TOKEN: ${{ secrets.DOCS_PORTAL_TOKEN }}
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL || '' }}
