@@ -30,17 +30,48 @@ jobs:
         with:
           node-version: "18"
 
+      - name: Debug initial directory structure
+        run: |
+          echo "=== INITIAL DIRECTORY STRUCTURE ==="
+          pwd
+          echo "--- ROOT CONTENTS ---"
+          ls -la
+          echo "--- SDK REPO CONTENTS ---"
+          ls -la ./sdk/
+          echo "--- DOCS PORTAL CONTENTS ---"
+          ls -la ./docs-portal/
+          echo "--- GITHUB DIRECTORY ---"
+          ls -la .github/
+          echo "--- WORKFLOWS DIRECTORY ---"
+          ls -la .github/workflows/
+
       - name: Install dependencies
         run: |
-          cd .github/workflows
+          echo "=== INSTALLING DEPENDENCIES ==="
+          pwd
+          echo "--- CHANGING TO WORKFLOWS DIR ---"
+          cd ${{ github.workspace }}/.github/workflows
+          pwd
+          echo "--- WORKFLOWS DIR CONTENTS ---"
+          ls -la
+          echo "--- INSTALLING NPM PACKAGES ---"
           npm install @octokit/rest simple-git axios
+          echo "--- NODE_MODULES CREATED ---"
+          ls -la
 
       - name: Update release notes
         run: |
-          cd .github/workflows
+          echo "=== UPDATING RELEASE NOTES ==="
+          pwd
+          echo "--- CHANGING TO WORKFLOWS DIR ---"
+          cd ${{ github.workspace }}/.github/workflows
+          pwd
+          echo "--- WORKFLOWS DIR CONTENTS ---"
+          ls -la
+          echo "--- RUNNING SCRIPT ---"
           node update-release-notes.js
         env:
-          SDK_CHANGELOG_PATH: ../../sdk/CHANGELOG.md
+          SDK_CHANGELOG_PATH: ${{ github.workspace }}/sdk/CHANGELOG.md
           GITHUB_TOKEN: ${{ secrets.DOCS_PORTAL_TOKEN }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
