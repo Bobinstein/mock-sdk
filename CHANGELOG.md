@@ -7,7 +7,7 @@
 ### Features
 
 * **Unified-Theory:** this sdk now has the unified theory of everything, so it can do super advanced particle physics.
-* **Change-to-trigger-gh-actions:** changed
+<!-- * **Change-to-trigger-gh-actions:** changed -->
 
 
 ## [3.18.1](https://github.com/ar-io/ar-io-sdk/compare/v3.18.0...v3.18.1) (2025-08-15)
