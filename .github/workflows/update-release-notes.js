@@ -13,10 +13,11 @@ const axios = require("axios");
  */
 
 const SDK_CHANGELOG_PATH = process.env.SDK_CHANGELOG_PATH || "./CHANGELOG.md";
-const RELEASE_NOTES_PATH = "../docs-portal/release-notes.md";
+const RELEASE_NOTES_PATH = "./docs-portal/release-notes.md";
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const SLACK_WEBHOOK_URL = process.env.SLACK_WEBHOOK_URL;
 
+// GitHub API client for cross-repo operations
 const octokit = new Octokit({ auth: GITHUB_TOKEN });
 
 function readFile(filePath) {
@@ -142,6 +143,17 @@ async function sendSlackNotification(message) {
 
 async function updateReleaseNotes() {
   console.log("🔄 Starting release notes update...");
+  console.log(`📁 Current working directory: ${process.cwd()}`);
+  console.log(`📖 SDK changelog path: ${SDK_CHANGELOG_PATH}`);
+  console.log(`📝 Release notes path: ${RELEASE_NOTES_PATH}`);
+
+  // Check if docs portal directory exists
+  if (!fs.existsSync("./docs-portal")) {
+    console.error(
+      "❌ docs-portal directory not found. Make sure the workflow checked out the docs portal repo."
+    );
+    process.exit(1);
+  }
 
   // Read the SDK changelog
   console.log(`📖 Reading SDK changelog from: ${SDK_CHANGELOG_PATH}`);
@@ -157,10 +169,13 @@ async function updateReleaseNotes() {
 
   console.log(`📋 Latest version found: ${newRelease.version}`);
 
-  // Read existing release notes
+  // Read existing release notes from the checked-out docs portal
   let existingContent = "";
   try {
     existingContent = readFile(RELEASE_NOTES_PATH);
+    console.log(
+      `📝 Successfully read existing release notes from ${RELEASE_NOTES_PATH}`
+    );
   } catch (error) {
     console.log("📝 No existing release notes found, creating new file");
   }
@@ -181,13 +196,16 @@ async function updateReleaseNotes() {
   if (existingContent.includes("## Overview")) {
     // Insert after Overview section
     updatedContent = insertReleaseIntoDocs(existingContent, newRelease);
+    console.log("✅ Inserted new release after Overview section");
   } else {
     // No Overview section, prepend to existing content
     updatedContent = `${newRelease.full}\n\n${existingContent}`.trim();
+    console.log("✅ Prepended new release to existing content");
   }
 
-  // Write the updated release notes
+  // Write the updated release notes to the checked-out docs portal
   writeFile(RELEASE_NOTES_PATH, updatedContent);
+  console.log(`📝 Updated release notes written to ${RELEASE_NOTES_PATH}`);
 
   // Send Slack notification
   await sendSlackNotification(
@@ -197,6 +215,9 @@ async function updateReleaseNotes() {
   );
 
   console.log("🎉 Release notes update completed successfully!");
+  console.log(
+    "📋 Next step: The workflow will commit and push these changes to create a PR"
+  );
 }
 
 // Run the script
