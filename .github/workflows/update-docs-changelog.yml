@@ -32,7 +32,6 @@ jobs:
 
       - name: Install dependencies
         run: |
-          cd ./docs-portal
           npm install @octokit/rest simple-git axios
 
       - name: Update release notes
