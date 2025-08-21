@@ -10,19 +10,60 @@ on:
 jobs:
   update-docs-changelog:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
 
     steps:
       - name: Checkout current repo
         uses: actions/checkout@v4
 
-      - name: Simple test
+      - name: Checkout docs portal repo
+        uses: actions/checkout@v4
+        with:
+          repository: bobinstein/mock-docs-portal
+          token: ${{ secrets.DOCS_PORTAL_TOKEN }}
+          path: ./docs-portal
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+          cache: 'npm'
+
+      - name: Debug directory structure
         run: |
-          echo "=== SIMPLE TEST ==="
+          echo "=== DIRECTORY STRUCTURE ==="
           pwd
+          echo "--- CURRENT REPO CONTENTS ---"
           ls -la
-          echo "Current repo contents:"
-          ls -la
-          echo "CHANGELOG.md contents (first 10 lines):"
-          head -10 CHANGELOG.md
-          echo "Test completed successfully"
+          echo "--- DOCS PORTAL CONTENTS ---"
+          ls -la ./docs-portal/
+          echo "--- WORKFLOWS DIRECTORY ---"
+          ls -la .github/workflows/
+
+      - name: Install dependencies
+        run: |
+          echo "=== INSTALLING DEPENDENCIES ==="
+          pwd
+          echo "--- CHECKING PACKAGE.JSON ---"
+          cat package.json
+          echo "--- INSTALLING NPM PACKAGES ---"
+          echo "Starting npm install at $(date)"
+          npm install
+          echo "npm install completed at $(date)"
+          echo "--- NODE_MODULES CREATED ---"
+          ls -la node_modules/ | head -10
+
+      - name: Test script execution
+        run: |
+          echo "=== TESTING SCRIPT EXECUTION ==="
+          pwd
+          echo "--- CHECKING SCRIPT EXISTS ---"
+          ls -la .github/workflows/update-release-notes.js
+          echo "--- RUNNING SCRIPT TEST ---"
+          echo "Starting script at $(date)"
+          node .github/workflows/update-release-notes.js
+          echo "Script completed at $(date)"
+        env:
+          SDK_CHANGELOG_PATH: ${{ github.workspace }}/CHANGELOG.md
+          GITHUB_TOKEN: ${{ secrets.DOCS_PORTAL_TOKEN }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
