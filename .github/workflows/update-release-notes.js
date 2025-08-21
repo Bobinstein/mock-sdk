@@ -13,7 +13,7 @@ const axios = require("axios");
  */
 
 const SDK_CHANGELOG_PATH = process.env.SDK_CHANGELOG_PATH || "./CHANGELOG.md";
-const RELEASE_NOTES_PATH = "./release-notes.md";
+const RELEASE_NOTES_PATH = "../docs-portal/release-notes.md";
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const SLACK_WEBHOOK_URL = process.env.SLACK_WEBHOOK_URL;
 

@@ -1,0 +1,11 @@
+{
+  "name": "changelog-automation",
+  "version": "1.0.0",
+  "description": "Dependencies for changelog automation workflow",
+  "private": true,
+  "dependencies": {
+    "@octokit/rest": "^20.0.0",
+    "simple-git": "^3.20.0",
+    "axios": "^1.6.0"
+  }
+}

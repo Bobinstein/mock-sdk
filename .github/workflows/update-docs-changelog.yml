@@ -32,13 +32,15 @@ jobs:
 
       - name: Install dependencies
         run: |
+          cd ./.github/workflows
           npm install @octokit/rest simple-git axios
 
       - name: Update release notes
         run: |
+          cd ./.github/workflows
           node update-release-notes.js
         env:
-          SDK_CHANGELOG_PATH: ./CHANGELOG.md
+          SDK_CHANGELOG_PATH: ../../sdk/CHANGELOG.md
           GITHUB_TOKEN: ${{ secrets.DOCS_PORTAL_TOKEN }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
