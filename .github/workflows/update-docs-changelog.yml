@@ -37,10 +37,9 @@ jobs:
 
       - name: Update release notes
         run: |
-          cd ./docs-portal
           node update-release-notes.js
         env:
-          SDK_CHANGELOG_PATH: ../sdk/CHANGELOG.md
+          SDK_CHANGELOG_PATH: ./CHANGELOG.md
           GITHUB_TOKEN: ${{ secrets.DOCS_PORTAL_TOKEN }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
