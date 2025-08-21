@@ -7,9 +7,14 @@
     "test-changelog": "node .github/workflows/update-release-notes.js",
     "test": "echo \"No tests specified\" && exit 0"
   },
+  "dependencies": {
+    "@octokit/rest": "^20.0.0",
+    "simple-git": "^3.20.0",
+    "axios": "^1.6.0"
+  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bobinstein/mock-sdk.git"
+    "url": "git+https://github.com/bobinstein/mock-docs-portal.git"
   },
   "keywords": [
     "sdk",
