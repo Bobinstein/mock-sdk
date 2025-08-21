@@ -1,3 +1,14 @@
+## [3.19.0](https://github.com/bobinstein/mock-sdk/compare/v3.18.1...v3.19.0) (2025-08-20)
+
+### Bug Fixes
+
+* **Bug:** fixed a big ol mutant bug ([c07aa38](https://github.com/ar-io/ar-io-sdk/commit/c07aa38b82f05bd7ce14c45ab912ac094ad1deb3))
+
+### Features
+
+* **Unified-Theory:** this sdk now has the unified theory of everything, so it can do super advanced particle physics.
+
+
 ## [3.18.1](https://github.com/ar-io/ar-io-sdk/compare/v3.18.0...v3.18.1) (2025-08-15)
 
 
