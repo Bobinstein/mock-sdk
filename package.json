@@ -1,0 +1,25 @@
+{
+  "name": "mock-sdk",
+  "version": "1.0.0",
+  "description": "Mock SDK repository for testing changelog automation",
+  "main": "CHANGELOG.md",
+  "scripts": {
+    "test-changelog": "node .github/workflows/update-release-notes.js",
+    "test": "echo \"No tests specified\" && exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bobinstein/mock-sdk.git"
+  },
+  "keywords": [
+    "sdk",
+    "changelog",
+    "automation",
+    "testing"
+  ],
+  "author": "Bob Instein",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
