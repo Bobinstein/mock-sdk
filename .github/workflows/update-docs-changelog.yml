@@ -13,16 +13,16 @@ jobs:
     timeout-minutes: 5
 
     steps:
-      - name: Checkout SDK repo
+      - name: Checkout current repo
         uses: actions/checkout@v4
-        with:
-          path: ./sdk
 
       - name: Simple test
         run: |
           echo "=== SIMPLE TEST ==="
           pwd
           ls -la
-          echo "SDK contents:"
-          ls -la ./sdk/
+          echo "Current repo contents:"
+          ls -la
+          echo "CHANGELOG.md contents (first 10 lines):"
+          head -10 CHANGELOG.md
           echo "Test completed successfully"
